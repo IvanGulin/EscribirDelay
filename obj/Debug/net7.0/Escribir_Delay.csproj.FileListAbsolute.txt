@@ -1,0 +1,14 @@
+C:\Users\ivaga\source\repos\Tonterias\Escribir_Delay\bin\Debug\net7.0\Escribir_Delay.exe
+C:\Users\ivaga\source\repos\Tonterias\Escribir_Delay\bin\Debug\net7.0\Escribir_Delay.deps.json
+C:\Users\ivaga\source\repos\Tonterias\Escribir_Delay\bin\Debug\net7.0\Escribir_Delay.runtimeconfig.json
+C:\Users\ivaga\source\repos\Tonterias\Escribir_Delay\bin\Debug\net7.0\Escribir_Delay.dll
+C:\Users\ivaga\source\repos\Tonterias\Escribir_Delay\bin\Debug\net7.0\Escribir_Delay.pdb
+C:\Users\ivaga\source\repos\Tonterias\Escribir_Delay\obj\Debug\net7.0\Escribir_Delay.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\ivaga\source\repos\Tonterias\Escribir_Delay\obj\Debug\net7.0\Escribir_Delay.AssemblyInfoInputs.cache
+C:\Users\ivaga\source\repos\Tonterias\Escribir_Delay\obj\Debug\net7.0\Escribir_Delay.AssemblyInfo.cs
+C:\Users\ivaga\source\repos\Tonterias\Escribir_Delay\obj\Debug\net7.0\Escribir_Delay.csproj.CoreCompileInputs.cache
+C:\Users\ivaga\source\repos\Tonterias\Escribir_Delay\obj\Debug\net7.0\Escribir_Delay.dll
+C:\Users\ivaga\source\repos\Tonterias\Escribir_Delay\obj\Debug\net7.0\refint\Escribir_Delay.dll
+C:\Users\ivaga\source\repos\Tonterias\Escribir_Delay\obj\Debug\net7.0\Escribir_Delay.pdb
+C:\Users\ivaga\source\repos\Tonterias\Escribir_Delay\obj\Debug\net7.0\Escribir_Delay.genruntimeconfig.cache
+C:\Users\ivaga\source\repos\Tonterias\Escribir_Delay\obj\Debug\net7.0\ref\Escribir_Delay.dll
