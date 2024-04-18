@@ -1,14 +1,12 @@
-using System.Globalization;
-
 public class Pajarito
 {
-    private List<char> caracteresEspañoles;
+    private List<char> caracteresESP;
     private String directorioActual;
     private String rutaRelativa;
 
     public Pajarito()
     {
-        caracteresEspañoles = new List<char>();
+        caracteresESP = new List<char>();
         CrearListaLetras();
 
         // Obtener la ruta del directorio actual
@@ -20,25 +18,15 @@ public class Pajarito
 
     private void CrearListaLetras()
     {
-        // Crear una lista para almacenar los caracteres alfanuméricos españoles en UTF-8
-        caracteresEspañoles.Add('ñ');
-        caracteresEspañoles.Add('Ñ');
-        caracteresEspañoles.Add(' ');
-
-        // Agregar letras del alfabeto latino básico (mayúsculas y minúsculas)
-        for (char letra = 'A'; letra <= 'Z'; letra++)
+        // Crear una lista para almacenar los caracteres ASCII
+        for (char var = (char)1; var <= 255; var++)
         {
-            caracteresEspañoles.Add(letra);
-            caracteresEspañoles.Add(char.ToLower(letra));
-        }
-
-        // Agregar dígitos del 0 al 9
-        for (char digito = '0'; digito <= '9'; digito++)
-        {
-            caracteresEspañoles.Add(digito);
+            caracteresESP.Add(var);
         }
     }
 
+    // Método que muestra por pantalla el proceso de encontrar todos los caracteres de una cadena hasta llegar a tener todos los caracteres iguales
+    // a los de la cadena original, y almacena todos los valores que se generan en cada iteración en un archivo.
     public void EscribirDelay(String frase, int delay)
     {
         VaciarArchivo();
@@ -49,34 +37,28 @@ public class Pajarito
         try
         {
             // Abrir el archivo para escribir (crea uno nuevo si no existe)
-            using (FileStream fileStream = new FileStream(rutaRelativa, FileMode.Append, FileAccess.Write))
-            using (StreamWriter streamWriter = new StreamWriter(fileStream))
+            using FileStream fileStream = new FileStream(rutaRelativa, FileMode.Append, FileAccess.Write);
+            using StreamWriter streamWriter = new StreamWriter(fileStream);
+            for (int i = 0; fraseActual.Length != frase.Length; i++)
             {
-                for (int i = 0; frase != fraseActual; i++)
+                if (String.Equals(frase[pos], letra))
                 {
-                    if (i >= caracteresEspañoles.Count)
-                    {
-                        i = 0;
-                    }
-
-                    if (String.Equals(frase[pos], letra))
-                    {
-                        fraseActual += letra;
-                        pos++;
-                    }
-
-                    if (frase == fraseActual)
-                    {
-                        System.Console.WriteLine(fraseActual);
-                        return;
-                    }
-
-                    else Console.WriteLine(fraseActual + letra);
-
-                    letra = caracteresEspañoles[i];
-                    Thread.Sleep(delay);
-                    streamWriter.WriteLine(fraseActual + letra);
+                    fraseActual += letra;
+                    pos++;
+                    i = 0;
                 }
+
+                if (frase == fraseActual)
+                {
+                    System.Console.WriteLine(fraseActual);
+                    break;
+                }
+
+                else Console.WriteLine(fraseActual + letra);
+
+                letra = caracteresESP[i];
+                Thread.Sleep(delay);
+                streamWriter.WriteLine(fraseActual + letra);
             }
         }
         catch (IOException e)
@@ -85,6 +67,66 @@ public class Pajarito
         }
     }
 
+    // Método para escribir el proceso de recorrer todas las letras de una cadena hasta que todas las letras son iguales a la cadena original al reves
+    // Se le pasa por parametros una cadena que se le dará la vuelta dentro del método y un número (ms) que sera el tiempo que esperará el metodo para cada iteración
+    // Y almacena la salida de cada iteración en un archivo y muestra por pantalla esa misma salida.
+    public void EscribirDelayReves(String frase, int delay)
+    {
+        VaciarArchivo();
+        char letra = ' ';
+        String fraseActual = "";
+        String inversa = CadenaInversa(frase);
+        int pos = 0;
+
+        try
+        {
+            // Abrir el archivo para escribir (crea uno nuevo si no existe)
+            using FileStream fileStream = new FileStream(rutaRelativa, FileMode.Append, FileAccess.Write);
+            using StreamWriter streamWriter = new StreamWriter(fileStream);
+
+            // Repetir hasta que la fraseActual sea igual a la frase original
+            for (int i = 0; ; i++)
+            {
+                // Comprobación de que la letra sea la misma que la de la cadena origina invertida en la posición de [pos]
+                if (letra == inversa[pos]) 
+                {   
+                    fraseActual += letra;
+                    pos++;
+                    i = 0;
+                }
+
+                streamWriter.WriteLine(fraseActual);
+                letra = caracteresESP[i];
+
+                // Verificar si la fraseActual coincide con la frase invertida
+                if (fraseActual == inversa)
+                {
+                    Console.WriteLine(fraseActual);
+                    break; 
+                }
+                else Console.WriteLine(letra + fraseActual);
+
+                Thread.Sleep(delay);
+            }
+        }
+        catch (IOException e)
+        {
+            Console.WriteLine("Error al escribir en el archivo: " + e.Message);
+        }
+    }
+
+    // Método para crear una cadena inversa de otra cadena.
+    private string CadenaInversa(string cadena)
+    {
+        System.Text.StringBuilder inversa = new System.Text.StringBuilder();
+        for (int i = cadena.Length - 1; i >= 0; i--)
+        {
+            inversa.Append(cadena[i]);
+        }
+        return inversa.ToString();
+    }
+
+    // Método que vacia el archivo en el que se almacenan las salidas de las cadenas.
     private void VaciarArchivo()
     {
         try
@@ -105,7 +147,7 @@ public class Pajarito
         {
             try
             {
-                Console.WriteLine("Escribe una frase a escribir: ");
+                Console.Write("Escribe una frase a escribir: ");
                 cadena = Console.ReadLine()!;
 
                 if (cadena.Length > 0)
@@ -125,7 +167,7 @@ public class Pajarito
         } while (true);
     }
 
-    public int ComprobarNum()
+    public int ComprobarNum(byte tipo)
     {
         try
         {
@@ -133,7 +175,8 @@ public class Pajarito
             int delay;
             do
             {
-                Console.Write("Escribe la cantidad de delay para escribir: ");
+                if (tipo == 0) Console.Write("Escribe una cantidad para el delay: ");
+                if (tipo == 1) Console.Write("Escribe una opción: ");
                 input = Console.ReadLine()!;
                 
                 if (int.TryParse(input, out delay))
