@@ -1,8 +1,7 @@
 public class Pajarito
 {
     private List<char> caracteresESP;
-    private String directorioActual;
-    private String rutaRelativa;
+    private String directorioActual, rutaRelativa;
 
     public Pajarito()
     {
@@ -137,62 +136,6 @@ public class Pajarito
         catch (IOException e)
         {
             Console.WriteLine("Error al vaciar el archivo: " + e.Message);
-        }
-    }
-
-    public String ComprobarCadena()
-    {
-        String cadena = "";
-        do
-        {
-            try
-            {
-                Console.Write("Escribe una frase a escribir: ");
-                cadena = Console.ReadLine()!;
-
-                if (cadena.Length > 0)
-                {
-                    return cadena;
-                }
-                else
-                {
-                    System.Console.WriteLine("Tienes que meter al menos un carácter, inténtalo de nuevo.");
-                }
-
-            }
-            catch (Exception e)
-            {
-                System.Console.WriteLine(e.Message);
-            }
-        } while (true);
-    }
-
-    public int ComprobarNum(byte tipo)
-    {
-        try
-        {
-            string input;
-            int delay;
-            do
-            {
-                if (tipo == 0) Console.Write("Escribe una cantidad para el delay: ");
-                if (tipo == 1) Console.Write("Escribe una opción: ");
-                input = Console.ReadLine()!;
-                
-                if (int.TryParse(input, out delay))
-                {
-                    return delay;
-                }
-                else
-                {
-                    Console.WriteLine("Debes ingresar un número válido. Inténtalo de nuevo.");
-                }
-            } while (true);
-        }
-        catch (Exception e)
-        {
-            Console.WriteLine("Ocurrió un error: " + e.Message + ". Asignando el valor 0");
-            return 0;
         }
     }
 }
