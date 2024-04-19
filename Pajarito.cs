@@ -15,6 +15,42 @@ public class Pajarito
         rutaRelativa = Path.Combine(directorioActual, "Texto.txt");
     }
 
+    public void Menu()
+    {
+        String frase;
+        int delay;
+        byte entrada = 0;
+
+        do
+        {
+            System.Console.WriteLine("\nPrograma de escritura con delay, eliga la opción que desee para continuar: \n");
+            System.Console.WriteLine("  1. Escribir frase con delay. \n");
+            System.Console.WriteLine("  2. Escribir frase con delay al revés. \n");
+            System.Console.WriteLine("  0. Salir \n");
+            entrada = (byte)Comprobar.ComprobarNum(1);
+
+            switch (entrada)
+            {
+                case 0:
+                    System.Console.WriteLine("Saliendo del menú de escritura con delay...");
+                    break;
+                case 1: 
+                    frase = Comprobar.ComprobarCadena(0);
+                    delay = Comprobar.ComprobarNum(0);
+                    EscribirDelay(frase, delay);
+                    break;
+                case 2:
+                    frase = Comprobar.ComprobarCadena(0);
+                    delay = Comprobar.ComprobarNum(0);
+                    EscribirDelayReves(frase, delay);
+                    break;
+                default: 
+                    System.Console.WriteLine("No has introducido un valor válido.");
+                    break;
+            }
+        }while(entrada != 0);
+    }
+
     private void CrearListaLetras()
     {
         // Crear una lista para almacenar los caracteres ASCII

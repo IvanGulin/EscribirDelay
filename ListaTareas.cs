@@ -2,24 +2,31 @@ public class ListaTareas
 {
     private String directorioActual, rutaRelativa;
     private LinkedList<String> listaTareas;
-    private short indice = 1;
 
     public ListaTareas()
     {
         // Iniciando coleccion "listaTareas".
-        listaTareas = new LinkedList<String> ();
+        listaTareas = new LinkedList<String>();
 
         // Obtener la ruta del directorio actual
         directorioActual = Directory.GetCurrentDirectory();
 
         // Construir la ruta relativa del archivo
         rutaRelativa = Path.Combine(directorioActual, "Tareas.txt");
-
-        FileStream fileStream = new FileStream(rutaRelativa, FileMode.Append, FileAccess.Write);
-        fileStream.Close();
-
-        if(indice != 1) indice = (short)(listaTareas.Count + 1);
+        
+        LeerFicheroHaciaColeccion();
     }
+
+    // Método para almacenar todas las tareas añadidas previamente y tener el "historial" sin borrar.
+    private void LeerFicheroHaciaColeccion()
+    {
+        using StreamReader streamReader = new StreamReader(rutaRelativa);
+        while (!streamReader.EndOfStream)
+        {
+            listaTareas.AddLast(streamReader.ReadLine()!);
+        }
+    }
+
     public void ListaTareasMenu()
     {
         byte entrada = 0;
@@ -36,7 +43,7 @@ public class ListaTareas
             switch (entrada)
             {
                 case 0:
-                    System.Console.WriteLine("Saliendo del programa...");
+                    System.Console.WriteLine("Saliendo del programa de lista de tareas...");
                     break;
                 case 1: 
                     AddTarea();
@@ -56,27 +63,35 @@ public class ListaTareas
 
     private String ShowTarea(short num, bool buscar)
     {
-        short cont = 1;
-        if (buscar)
+        if(listaTareas.Count != 0)
         {
-            foreach (var tarea in listaTareas)
+            short cont = 1;
+            if (buscar)
             {
-                if (num == cont) return tarea;
-                cont++;
+                foreach (var tarea in listaTareas)
+                {
+                    if (num == cont) return tarea;
+                    cont++;
+                }
             }
+            
+            else
+            {
+                System.Console.WriteLine("\n\nMostrando la lista de tareas completa:");
+                foreach (var tarea in listaTareas)
+                {
+                    System.Console.WriteLine("\t" + cont + ". " + tarea.ToString().ToUpper());
+                    cont++;
+                }
+            }
+            System.Console.WriteLine();
+            return "";
         }
-        
         else
         {
-            System.Console.WriteLine("\n\nMostrando la lista de tareas completa:");
-            foreach (var tarea in listaTareas)
-            {
-                System.Console.WriteLine("\t" + cont + ". " + tarea.ToString().ToUpper());
-                cont++;
-            }
+            System.Console.WriteLine("La lista esta vacía.");
+            return "";
         }
-        System.Console.WriteLine();
-        return "";
     }
 
     private void DelTarea()
@@ -99,12 +114,10 @@ public class ListaTareas
         {
             // Abrir el archivo en modo de escritura, sobrescribiendo el contenido existente
             using StreamWriter streamWriter = new StreamWriter(rutaRelativa);
-            indice = 1;
 
             foreach (var tarea in listaTareas)
             {
-                streamWriter.WriteLine(indice + " - " + tarea.ToString());
-                indice++;
+                streamWriter.WriteLine(tarea.ToString());
             }
         }
         catch (IOException e)
@@ -134,8 +147,7 @@ public class ListaTareas
             using FileStream fileStream = new FileStream(rutaRelativa, FileMode.Append, FileAccess.Write);
             using StreamWriter streamWriter = new StreamWriter(fileStream);
             {
-                streamWriter.WriteLine(indice + " - " + tarea);
-                indice++;
+                streamWriter.WriteLine(tarea);
             }
         }
         catch (IOException e)
