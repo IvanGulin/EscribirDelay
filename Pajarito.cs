@@ -38,16 +38,16 @@ public class Pajarito
             // Abrir el archivo para escribir (crea uno nuevo si no existe)
             using FileStream fileStream = new FileStream(rutaRelativa, FileMode.Append, FileAccess.Write);
             using StreamWriter streamWriter = new StreamWriter(fileStream);
-            for (int i = 0; fraseActual.Length != frase.Length; i++)
+            for (int i = 0; fraseActual.Length < frase.Length; i++)
             {
-                if (String.Equals(frase[pos], letra))
+                if (frase[pos] == letra)
                 {
                     fraseActual += letra;
                     pos++;
                     i = 0;
                 }
 
-                if (frase == fraseActual)
+                if (frase.Equals(fraseActual))
                 {
                     System.Console.WriteLine(fraseActual);
                     break;
@@ -84,10 +84,10 @@ public class Pajarito
             using StreamWriter streamWriter = new StreamWriter(fileStream);
 
             // Repetir hasta que la fraseActual sea igual a la frase original
-            for (int i = 0; ; i++)
+            for (int i = 0; fraseActual != inversa ; i++)
             {
                 // Comprobación de que la letra sea la misma que la de la cadena origina invertida en la posición de [pos]
-                if (letra == inversa[pos]) 
+                if (letra.Equals(inversa[pos])) 
                 {   
                     fraseActual += letra;
                     pos++;
@@ -98,7 +98,7 @@ public class Pajarito
                 letra = caracteresESP[i];
 
                 // Verificar si la fraseActual coincide con la frase invertida
-                if (fraseActual == inversa)
+                if (fraseActual.Equals(inversa))
                 {
                     Console.WriteLine(fraseActual);
                     break; 
@@ -131,11 +131,19 @@ public class Pajarito
         try
         {
             // Vaciar el contenido del archivo
-            File.WriteAllText(rutaRelativa, string.Empty);
+            File.Delete(rutaRelativa);
         }
         catch (IOException e)
         {
             Console.WriteLine("Error al vaciar el archivo: " + e.Message);
+        }
+        finally
+        {
+            if (File.Exists(rutaRelativa))
+            {
+                using FileStream fileStream = File.OpenRead(rutaRelativa);
+                fileStream.Close();
+            }
         }
     }
 }
