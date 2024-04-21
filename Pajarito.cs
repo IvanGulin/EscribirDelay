@@ -1,13 +1,9 @@
 public class Pajarito
 {
-    private List<char> caracteresESP;
     private String directorioActual, rutaRelativa;
 
     public Pajarito()
     {
-        caracteresESP = new List<char>();
-        CrearListaLetras();
-
         // Obtener la ruta del directorio actual
         directorioActual = Directory.GetCurrentDirectory();
 
@@ -51,15 +47,6 @@ public class Pajarito
         }while(entrada != 0);
     }
 
-    private void CrearListaLetras()
-    {
-        // Crear una lista para almacenar los caracteres ASCII
-        for (char var = (char)1; var <= 255; var++)
-        {
-            caracteresESP.Add(var);
-        }
-    }
-
     // Método que muestra por pantalla el proceso de encontrar todos los caracteres de una cadena hasta llegar a tener todos los caracteres iguales
     // a los de la cadena original, y almacena todos los valores que se generan en cada iteración en un archivo.
     public void EscribirDelay(String frase, int delay)
@@ -81,6 +68,7 @@ public class Pajarito
                     fraseActual += letra;
                     pos++;
                     i = 0;
+                    letra = ' ';
                 }
 
                 if (frase.Equals(fraseActual))
@@ -91,7 +79,7 @@ public class Pajarito
 
                 else Console.WriteLine(fraseActual + letra);
 
-                letra = caracteresESP[i];
+                letra++;
                 Thread.Sleep(delay);
                 streamWriter.WriteLine(fraseActual + letra);
             }
@@ -128,10 +116,11 @@ public class Pajarito
                     fraseActual += letra;
                     pos++;
                     i = 0;
+                    letra = ' ';
                 }
 
                 streamWriter.WriteLine(fraseActual);
-                letra = caracteresESP[i];
+                letra++;
 
                 // Verificar si la fraseActual coincide con la frase invertida
                 if (fraseActual.Equals(inversa))

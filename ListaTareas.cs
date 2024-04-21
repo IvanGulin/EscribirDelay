@@ -14,6 +14,17 @@ public class ListaTareas
         // Construir la ruta relativa del archivo
         rutaRelativa = Path.Combine(directorioActual, "Tareas.txt");
         
+        try
+        {
+            // Abrir el archivo en modo de escritura, sobrescribiendo el contenido existente
+            using FileStream fileStream = new FileStream(rutaRelativa, FileMode.Create, FileAccess.Write);
+            fileStream.Close();
+        }
+        catch (IOException e)
+        {
+            Console.WriteLine("Error al crear el archivo: " + e.Message);
+        }
+
         LeerFicheroHaciaColeccion();
     }
 
