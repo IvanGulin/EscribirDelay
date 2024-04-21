@@ -12,3 +12,4 @@ C:\Users\ivaga\source\repos\Tonterias\Escribir_Delay\obj\Debug\net7.0\refint\Esc
 C:\Users\ivaga\source\repos\Tonterias\Escribir_Delay\obj\Debug\net7.0\Escribir_Delay.pdb
 C:\Users\ivaga\source\repos\Tonterias\Escribir_Delay\obj\Debug\net7.0\Escribir_Delay.genruntimeconfig.cache
 C:\Users\ivaga\source\repos\Tonterias\Escribir_Delay\obj\Debug\net7.0\ref\Escribir_Delay.dll
+C:\Users\ivaga\source\repos\Tonterias\Escribir_Delay\obj\Debug\net7.0\Escribir_Delay.sourcelink.json
