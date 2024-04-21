@@ -1,3 +1,5 @@
+using System.Runtime.InteropServices;
+
 public class ListaTareas
 {
     private String directorioActual, rutaRelativa;
@@ -13,19 +15,24 @@ public class ListaTareas
 
         // Construir la ruta relativa del archivo
         rutaRelativa = Path.Combine(directorioActual, "Tareas.txt");
-        
-        try
-        {
-            // Abrir el archivo en modo de escritura, sobrescribiendo el contenido existente
-            using FileStream fileStream = new FileStream(rutaRelativa, FileMode.Create, FileAccess.Write);
-            fileStream.Close();
-        }
-        catch (IOException e)
-        {
-            Console.WriteLine("Error al crear el archivo: " + e.Message);
-        }
+    }
 
-        LeerFicheroHaciaColeccion();
+    public void ComprobarFicheroExiste()
+    {
+        if (!File.Exists("Tareas.txt"))
+        {
+            try
+            {
+                // Abrir el archivo en modo de escritura, sobrescribiendo el contenido existente
+                using FileStream fileStream = new FileStream(rutaRelativa, FileMode.Create, FileAccess.Write);
+                fileStream.Close();
+            }
+            catch (IOException e)
+            {
+                Console.WriteLine("Error al crear el archivo: " + e.Message);
+            }
+        }
+        else LeerFicheroHaciaColeccion();
     }
 
     // Método para almacenar todas las tareas añadidas previamente y tener el "historial" sin borrar.
@@ -54,15 +61,19 @@ public class ListaTareas
             switch (entrada)
             {
                 case 0:
+                    Console.Clear();
                     System.Console.WriteLine("Saliendo del programa de lista de tareas...");
                     break;
                 case 1: 
+                    Console.Clear();
                     AddTarea();
                     break;
                 case 2: 
+                    Console.Clear();
                     DelTarea();
                     break;
                 case 3: 
+                    Console.Clear();
                     ShowTarea(0, false);
                     break;
                 default: 
@@ -88,7 +99,7 @@ public class ListaTareas
             
             else
             {
-                System.Console.WriteLine("\n\nMostrando la lista de tareas completa:");
+                System.Console.WriteLine("Mostrando la lista de tareas completa:");
                 foreach (var tarea in listaTareas)
                 {
                     System.Console.WriteLine("\t" + cont + ". " + tarea.ToString().ToUpper());
@@ -107,7 +118,17 @@ public class ListaTareas
 
     private void DelTarea()
     {
+        ShowTarea(0, false);
         short borrar = (short)Comprobar.ComprobarNum(2);
+
+        // Si el usuario no ha introducido un número válido, volver al menú.
+        if (borrar == 0) 
+        {
+            System.Console.WriteLine("Error, volviendo atrás."); 
+            return;
+        }
+
+        Console.Clear();
         String tarea = ShowTarea(borrar, true);
 
         if (tarea != null) 
@@ -140,13 +161,21 @@ public class ListaTareas
     private void AddTarea()
     {
         String tarea = Comprobar.ComprobarCadena(1);
-        try
+
+        if (!listaTareas.Contains(tarea))
         {
-            listaTareas.AddLast(tarea);
-            ListaTareasArchivos(tarea);
-        }catch(Exception ex)
+            try
+            {
+                listaTareas.AddLast(tarea);
+                ListaTareasArchivos(tarea);
+            }catch(Exception ex)
+            {
+                System.Console.WriteLine(ex.Message);
+            }
+        }
+        else
         {
-            System.Console.WriteLine(ex.Message);
+            System.Console.WriteLine("Esa tarea ya esta en la lista de tareas, ponle otro nombre si de verdad la quieres añadir.");
         }
     }
 

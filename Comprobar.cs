@@ -14,6 +14,7 @@ public class Comprobar
 
                 if (cadena.Length > 0)
                 {
+                    cadena = cadena.ToLower();
                     return cadena;
                 }
                 else

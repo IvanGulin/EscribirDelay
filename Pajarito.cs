@@ -28,6 +28,7 @@ public class Pajarito
             switch (entrada)
             {
                 case 0:
+                    Console.Clear();
                     System.Console.WriteLine("Saliendo del menú de escritura con delay...");
                     break;
                 case 1: 
